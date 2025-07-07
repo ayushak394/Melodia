@@ -8,9 +8,9 @@ function SongPage() {
   const { id } = useParams();
   const [song, setSong] = useState(null);
   const [error, setError] = useState(null);
-  const baseURL = process.env.REACT_APP_API_URL;
 
   const isAuthenticated = !!localStorage.getItem("token");
+          const baseURL = process.env.REACT_APP_API_URL;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -93,7 +93,7 @@ function SongPage() {
   if (!song) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-gray-900 flex flex-col items-center justify-center">
-        <header className="flex flex-col sm:flex-row justify-between items-center px-6 sm:px-8 py-4 bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 shadow-2xl border-b border-purple-800 sticky top-0 z-50 w-full">
+        <header className="flex flex-col sm:flex-row justify-between items-center px-6 sm:px-8 py- bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 shadow-2xl border-b border-purple-800 sticky top-0 z-50 w-full">
           <h1 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-4 sm:mb-0">
             <img
               src="/waveform.png"
@@ -157,7 +157,7 @@ function SongPage() {
       </header>
 
       <div className="flex-grow flex flex-col items-center justify-center pt-24 pb-12 w-full">
-        <div className="bg-gray-800 rounded-3xl shadow-glow-blue p-6 md:p-8 flex flex-col items-center max-w-lg w-full transition-transform duration-300 ease-in-out">
+        <div className="bg-gray-800 rounded-3xl shadow-glow-blue p-6 md:pb-2 flex flex-col items-center max-w-lg w-full transition-transform duration-300 ease-in-out">
           <img
             src={song.image}
             alt={song.title}

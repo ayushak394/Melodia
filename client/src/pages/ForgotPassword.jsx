@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import {
+  FaHeart
+} from "react-icons/fa";
 
 function ForgotPassword() {
   const [formData, setFormData] = useState({ email: "", newPassword: "" });
@@ -44,73 +47,84 @@ function ForgotPassword() {
   }, []);
 
   return (
-    <><header className="flex flex-col sm:flex-row justify-between items-center px-6 sm:px-8 py-4 bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 shadow-2xl border-b border-purple-800 sticky top-0 z-50">
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-4 sm:mb-0">
-              <img
-                src="/waveform.png"
-                alt="Melodia Logo"
-                className="w-10 h-10 lg:w-12 lg:h-12 rounded-full filter brightness-0 invert"
-              />
-              <span className="bg-gradient-to-r from-teal-300 via-cyan-400 to-blue-500 text-transparent bg-clip-text drop-shadow-md">
-                Melodia
-              </span>
-            </h1>
-    
-            <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-4">
-              <Link
-                to="/"
-                className="bg-blue-700 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
-              >
-                <i className="fas fa-home mr-2 hidden sm:inline"></i>Home
-              </Link>
-            </div>
-          </header>
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0d0d2b] via-[#1e1e4f] to-[#3a3a8a] text-white font-sans relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/noisy.png')] bg-repeat">
-      <div className="w-full max-w-3xl mx-auto bg-[#1f1f3a]/90 p-10 rounded-2xl shadow-2xl border-[3px] border-transparent backdrop-blur-md z-10 animate-fade-in hover:border-teal-400 hover:shadow-teal-500/40 transition-all duration-500 ease-in-out group">
-        <h1 className="text-4xl font-extrabold mb-6 text-teal-300 text-center">
-          Forgot Password 🔐
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0d0d2b] via-[#1e1e4f] to-[#3a3a8a] text-white font-sans relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/noisy.png')] bg-repeat">
+      <header className="flex flex-col sm:flex-row justify-between items-center px-6 sm:px-8 py-4 bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 shadow-2xl border-b border-purple-800 sticky top-0 z-50">
+        <h1 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-4 sm:mb-0">
+          <img
+            src="/waveform.png"
+            alt="Melodia Logo"
+            className="w-10 h-10 lg:w-12 lg:h-12 rounded-full filter brightness-0 invert"
+          />
+          <span className="bg-gradient-to-r from-teal-300 via-cyan-400 to-blue-500 text-transparent bg-clip-text drop-shadow-md">
+            Melodia
+          </span>
         </h1>
 
-        {error && (
-          <p className="text-red-400 mb-4 text-center animate-shake">{error}</p>
-        )}
-        {message && (
-          <p className="text-green-400 mb-4 text-center animate-fade-in">
-            {message}
-          </p>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-            className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Enter your new password"
-            value={formData.newPassword}
-            onChange={(e) =>
-              setFormData({ ...formData, newPassword: e.target.value })
-            }
-            className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
-            required
-          />
-          <button
-            type="submit"
-            className="w-full bg-purple-700 hover:bg-purple-600 py-3 rounded-xl text-white font-semibold transition duration-200 shadow-md hover:shadow-purple-400/40"
+        <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-4">
+          <Link
+            to="/"
+            className="bg-blue-700 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
           >
-            Reset Password
-          </button>
-        </form>
+            <i className="fas fa-home mr-2 hidden sm:inline"></i>Home
+          </Link>
+        </div>
+      </header>
+
+      <div className="flex-grow flex items-center justify-center">
+        <div className="w-full max-w-3xl mx-auto bg-[#1f1f3a]/90 p-10 rounded-2xl shadow-2xl border-[3px] border-teal-400 backdrop-blur-md z-10 animate-fade-in shadow-teal-500/40 transition-all duration-500 ease-in-out group">
+          <h1 className="text-4xl font-extrabold mb-6 text-teal-300 text-center">
+            Forgot Password 🔐
+          </h1>
+
+          {error && (
+            <p className="text-red-400 mb-4 text-center animate-shake">{error}</p>
+          )}
+          {message && (
+            <p className="text-green-400 mb-4 text-center animate-fade-in">
+              {message}
+            </p>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Enter your new password"
+              value={formData.newPassword}
+              onChange={(e) =>
+                setFormData({ ...formData, newPassword: e.target.value })
+              }
+              className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
+              required
+            />
+            <button
+              type="submit"
+              className="w-full bg-purple-700 hover:bg-purple-600 py-3 rounded-xl text-white font-semibold transition duration-200 shadow-md hover:shadow-purple-400/40"
+            >
+              Reset Password
+            </button>
+          </form>
+        </div>
       </div>
+
+      <footer className="py-8 text-center z-10 relative animate-fade-in border-t border-purple-800 mt-auto">
+        <p className="text-gray-400 text-lg">© 2025 Melodia. All rights reserved.</p>
+        <p className="mt-4 text-gray-500 text-sm">
+          Developed with <FaHeart className="inline text-red-500 mx-1" /> by:{" "}
+          <span className="font-medium text-teal-300">Ayush Kumar</span> &{" "}
+          <span className="font-medium text-teal-300">Anshika Shekhar</span>
+        </p>
+      </footer>
     </div>
-    </>
   );
 }
 

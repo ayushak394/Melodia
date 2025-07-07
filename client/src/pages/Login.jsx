@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import confetti from "canvas-confetti";
+import {
+  FaHeart
+} from "react-icons/fa";
 
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const baseURL = process.env.REACT_APP_API_URL;
+      const baseURL = process.env.REACT_APP_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +54,7 @@ function Login() {
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0d0d2b] via-[#1e1e4f] to-[#3a3a8a] text-white font-sans relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/noisy.png')] bg-repeat">
       <header className="flex flex-col sm:flex-row justify-between items-center px-6 sm:px-8 py-4 bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 shadow-2xl border-b border-purple-800 sticky top-0 z-50">
         <h1 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-4 sm:mb-0">
           <img
@@ -74,8 +77,8 @@ function Login() {
         </div>
       </header>
 
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0d0d2b] via-[#1e1e4f] to-[#3a3a8a] text-white font-sans relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/noisy.png')] bg-repeat">
-        <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between bg-[#1f1f3a]/90 p-8 rounded-2xl shadow-2xl border-[3px] border-transparent backdrop-blur-md z-10 animate-fade-in hover:border-purple-400 hover:shadow-purple-500/40 transition-all duration-500 ease-in-out group">
+      <div className="flex-grow flex items-center justify-center">
+        <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between bg-[#1f1f3a]/90 p-8 rounded-2xl shadow-2xl border-[3px] border-purple-400 backdrop-blur-md z-10 animate-fade-in shadow-purple-500/40 transition-all duration-500 ease-in-out group">
           <div className="hidden md:flex w-1/2 justify-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/727/727218.png"
@@ -133,7 +136,16 @@ function Login() {
           </div>
         </div>
       </div>
-    </>
+
+      <footer className="py-8 text-center z-10 relative animate-fade-in border-t border-purple-800 mt-auto">
+        <p className="text-gray-400 text-lg">© 2025 Melodia. All rights reserved.</p>
+        <p className="mt-4 text-gray-500 text-sm">
+          Developed with <FaHeart className="inline text-red-500 mx-1" /> by:{" "}
+          <span className="font-medium text-teal-300">Ayush Kumar</span> &{" "}
+          <span className="font-medium text-teal-300">Anshika Shekhar</span>
+        </p>
+      </footer>
+    </div>
   );
 }
 

@@ -4,11 +4,32 @@ import { motion, AnimatePresence } from "framer-motion";
 import Header from "./Header";
 import { useMusic } from "./MusicContext";
 import useAuthRedirect from "../hook/useAuthRedirect";
+import { FaPlay, FaPause,FaPlus,FaMusic, FaSave, FaTimes } from "react-icons/fa";
+
+const Notification = ({ message, type, onClose }) => {
+  const bgColor = type === "success" ? "bg-green-600" : "bg-red-600";
+  const textColor = "text-white";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.3 }}
+      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-3 rounded-lg shadow-xl z-50 ${bgColor} ${textColor} flex items-center justify-between space-x-4`}
+    >
+      <span>{message}</span>
+      <button onClick={onClose} className="text-white ml-4 font-bold text-lg">
+        &times;
+      </button>
+    </motion.div>
+  );
+};
+
 
 function ExplorePage() {
-
   useAuthRedirect();
-  
+
   const [searchQuery, setSearchQuery] = useState("");
   const [genreFilter, setGenreFilter] = useState("");
   const [artistFilter, setArtistFilter] = useState("");
@@ -21,11 +42,25 @@ function ExplorePage() {
   const [likedSongs, setLikedSongs] = useState({});
   const dropdownRefs = useRef({});
 
+  const [notification, setNotification] = useState({
+    message: "",
+    type: "",
+    isVisible: false,
+  });
+
   const { playSong, currentSong, isPlaying } = useMusic();
-  
+
   const baseURL = process.env.REACT_APP_API_URL;
+
   const SONGS_API = `${baseURL}/api/songs`;
   const PLAYLIST_API = `${baseURL}/api/playlists`;
+
+  const showNotification = (message, type) => {
+    setNotification({ message, type, isVisible: true });
+    setTimeout(() => {
+      setNotification((prev) => ({ ...prev, isVisible: false }));
+    }, 3000);
+  };
 
   useEffect(() => {
     const fetchSongs = async () => {
@@ -44,6 +79,7 @@ function ExplorePage() {
         setSongs(response.data.songs);
       } catch (error) {
         console.error("Error fetching songs:", error);
+        showNotification("Failed to fetch songs.", "error");
       }
     };
     fetchSongs();
@@ -59,6 +95,7 @@ function ExplorePage() {
         setPlaylists(response.data);
       } catch (error) {
         console.error("Error fetching playlists:", error);
+        showNotification("Failed to fetch playlists.", "error");
       }
     };
     fetchPlaylists();
@@ -98,11 +135,14 @@ function ExplorePage() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const uniqueGenres = [...new Set(songs.map((song) => song.genre))];
-  const uniqueArtists = [...new Set(songs.map((song) => song.artist))];
+  const uniqueGenres = [...new Set(songs.map((song) => song.genre))].filter(Boolean);
+  const uniqueArtists = [...new Set(songs.map((song) => song.artist))].filter(Boolean);
 
   const handleCreatePlaylist = async () => {
-    if (!newPlaylistName.trim()) return;
+    if (!newPlaylistName.trim()) {
+      showNotification("Playlist name cannot be empty.", "error");
+      return;
+    }
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
@@ -113,8 +153,10 @@ function ExplorePage() {
       setPlaylists([...playlists, response.data]);
       setNewPlaylistName("");
       setShowPlaylistInput(false);
+      showNotification(`Playlist "${response.data.name}" created!`, "success");
     } catch (err) {
       console.error("Error creating playlist:", err);
+      showNotification("Failed to create playlist. Try again.", "error");
     }
   };
 
@@ -133,11 +175,11 @@ function ExplorePage() {
         { songId: song._id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert(`🎵 "${song.title}" added to playlist successfully!`);
+      showNotification(`🎵 "${song.title}" added to playlist!`, "success");
       setVisibleDropdowns((prev) => ({ ...prev, [song._id]: false }));
     } catch (err) {
       console.error("Error adding song to playlist:", err);
-      alert("Failed to add song. Try again.");
+      showNotification("Failed to add song. Try again.", "error");
     }
   };
 
@@ -153,8 +195,13 @@ function ExplorePage() {
         ...prev,
         [songId]: response.data.liked,
       }));
+      showNotification(
+        response.data.liked ? "💖 Song Liked!" : "🤍 Song Unliked.",
+        "success"
+      );
     } catch (err) {
       console.error("Failed to toggle like:", err);
+      showNotification("Failed to like/unlike song.", "error");
     }
   };
 
@@ -162,8 +209,8 @@ function ExplorePage() {
     const shareUrl = `${window.location.origin}/song/${song._id}`;
     navigator.clipboard
       .writeText(shareUrl)
-      .then(() => alert("Link copied to clipboard!"))
-      .catch(() => alert("Failed to copy link."));
+      .then(() => showNotification("🔗 Link copied to clipboard!", "success"))
+      .catch(() => showNotification("Failed to copy link.", "error"));
   };
 
   return (
@@ -174,6 +221,16 @@ function ExplorePage() {
       className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-indigo-900 text-white font-sans"
     >
       <Header />
+
+      <AnimatePresence>
+        {notification.isVisible && (
+          <Notification
+            message={notification.message}
+            type={notification.type}
+            onClose={() => setNotification((prev) => ({ ...prev, isVisible: false }))}
+          />
+        )}
+      </AnimatePresence>
 
       <div className="flex">
         <aside className="w-1/5 p-6 bg-gradient-to-b from-gray-950 to-gray-900 border-r border-gray-700 shadow-2xl sticky top-0 h-screen overflow-y-auto">
@@ -258,38 +315,64 @@ function ExplorePage() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <div className="ml-8">
-              {showPlaylistInput ? (
-                <div className="flex space-x-3">
-                  <input
-                    type="text"
-                    value={newPlaylistName}
-                    onChange={(e) => setNewPlaylistName(e.target.value)}
-                    placeholder="New Playlist Name"
-                    className="p-3 rounded-lg bg-gray-800 text-white"
-                  />
-                  <button
-                    onClick={handleCreatePlaylist}
-                    className="bg-green-600 px-6 py-3 rounded-lg hover:bg-green-700"
+              <AnimatePresence mode="wait"> 
+                {showPlaylistInput ? (
+                  <motion.div
+                    key="create-input" 
+                    initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex space-x-3 items-center" 
                   >
-                    ➕ Add
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => setShowPlaylistInput(true)}
-                  className="bg-purple-600 px-8 py-3 rounded-lg hover:bg-purple-700"
-                >
-                  ✨ Create Playlist
-                </button>
-              )}
+                    <input
+                      type="text"
+                      value={newPlaylistName}
+                      onChange={(e) => setNewPlaylistName(e.target.value)}
+                      placeholder="New Playlist Name"
+                      className="p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                    <button
+                      onClick={handleCreatePlaylist}
+                      className="bg-green-600 px-6 py-3 rounded-lg hover:bg-green-700 flex items-center gap-2" 
+                    >
+                      <FaSave /> Add
+                    </button>
+                    <button
+                      onClick={() => setShowPlaylistInput(false)}
+                      className="bg-gray-600 px-3 py-3 rounded-lg hover:bg-gray-700" 
+                    >
+                      <FaTimes />
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.button
+                    key="create-button" 
+                    initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={() => setShowPlaylistInput(true)}
+                    className="bg-purple-600 px-8 py-3 rounded-lg hover:bg-purple-700 flex items-center gap-2" 
+                  >
+                    <FaPlus className="text-xl" /> Create Playlist
+                  </motion.button>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-32">
-            {songs.map((song) => (
+            {songs.map((song) => {
+              const isCurrent = currentSong && currentSong._id === song._id; 
+              return (
               <motion.div
                 key={song._id}
-                className="bg-gray-800 rounded-xl shadow-xl p-4 relative group"
+                className={`bg-gray-800 rounded-xl shadow-xl p-4 relative group cursor-pointer ${
+                  isCurrent
+                    ? "border border-pink-500 shadow-pink-500"
+                    : "border border-transparent" 
+                } shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300`}
               >
                 <div className="relative w-full h-48 rounded-lg overflow-hidden">
                   <img
@@ -306,11 +389,11 @@ function ExplorePage() {
                           songs.findIndex((s) => s._id === song._id)
                         )
                       }
-                      className="bg-purple-600 text-white p-4 rounded-full shadow-lg hover:bg-purple-700 text-2xl transform hover:scale-110"
+                      className="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-4 rounded-full text-2xl shadow-xl hover:scale-110 transition-transform duration-200"
                     >
-                      {currentSong && currentSong._id === song._id && isPlaying
-                        ? "⏸️"
-                        : "▶️"}
+                      {isCurrent && isPlaying
+                        ? <FaPause />
+                        : <FaPlay />}
                     </button>
                   </div>
                 </div>
@@ -380,8 +463,18 @@ function ExplorePage() {
                     🔗 Share
                   </button>
                 </div>
+                {isCurrent && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="absolute top-4 right-4 bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-1"
+                  >
+                    <FaMusic /> Playing
+                  </motion.div>
+                )}
               </motion.div>
-            ))}
+            );
+            })}
           </div>
         </main>
       </div>
