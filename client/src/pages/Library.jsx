@@ -17,7 +17,7 @@ function Library() {
 
   const fetchLikedSongs = useCallback(async () => {
     try {
-      const response = await axios.get(`${baseURL}}/api/songs/liked`, {
+      const response = await axios.get(`${baseURL}/api/songs/liked`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLikedSongs(response.data.likedSongs || []);

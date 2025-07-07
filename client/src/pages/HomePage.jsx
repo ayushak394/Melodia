@@ -25,7 +25,7 @@ function HomePage() {
     const fetchUsername = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${baseURL}api/user/fetchusername`, {
+        const response = await axios.get(`${baseURL}/api/user/fetchusername`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsername(response.data.username);
@@ -37,7 +37,7 @@ function HomePage() {
 
     const fetchTrendingSongs = async () => {
       try {
-        const response = await axios.get(`${baseURL}api/songs/trending`);
+        const response = await axios.get(`${baseURL}/api/songs/trending`);
         setTrendingSongs(
           response.data
             .sort((a, b) => b.trendingScore - a.trendingScore)

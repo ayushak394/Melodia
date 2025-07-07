@@ -17,7 +17,7 @@ function Signup() {
     e.preventDefault();
     setError("");
     try {
-      const response = await axios.post(`${baseURL}api/auth/signup`, formData);
+      const response = await axios.post(`${baseURL}/api/auth/signup`, formData);
       alert(response.data.message || "Signup successful!");
       navigate("/login");
     } catch (error) {

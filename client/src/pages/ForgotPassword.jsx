@@ -13,7 +13,7 @@ function ForgotPassword() {
     e.preventDefault();
     setError("");
     try {
-      await axios.post(`${baseURL}api/auth/forgotpassword`, formData);
+      await axios.post(`${baseURL}/api/auth/forgotpassword`, formData);
       setMessage(
         "Password has been changed successfully! Redirecting to login..."
       );
