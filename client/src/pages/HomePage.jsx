@@ -18,7 +18,7 @@ function HomePage() {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [trendingSongs, setTrendingSongs] = useState([]);
-  const baseURL = "http://localhost:4000/";
+  const baseURL = process.env.REACT_APP_API_URL;
   const { playSong } = useMusic();
 
   useEffect(() => {

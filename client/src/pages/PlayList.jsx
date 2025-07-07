@@ -10,13 +10,16 @@ function PlaylistPage() {
   const [editingPlaylistId, setEditingPlaylistId] = useState(null);
   const [newPlaylistName, setNewPlaylistName] = useState("");
 
+    const baseURL = process.env.REACT_APP_API_URL;
+
+
   const headers = useMemo(() => {
     return { Authorization: `Bearer ${localStorage.getItem("token")}` };
   }, []);
 
   const fetchPlaylists = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/playlists", {
+      const response = await axios.get(`${baseURL}/api/playlists`, {
         headers,
       });
       setPlaylists(response.data);
@@ -32,7 +35,7 @@ function PlaylistPage() {
     }
     try {
       await axios.patch(
-        `http://localhost:4000/api/playlists/${playlistId}`,
+        `${baseURL}/api/playlists/${playlistId}`,
         { name: newPlaylistName.trim() },
         { headers }
       );
@@ -51,7 +54,7 @@ function PlaylistPage() {
     }
     try {
       await axios.delete(
-        `http://localhost:4000/api/playlists/${playlistId}/songs/${songId}`,
+        `${baseURL}/api/playlists/${playlistId}/songs/${songId}`,
         { headers }
       );
       fetchPlaylists();
@@ -64,7 +67,7 @@ function PlaylistPage() {
   const handleDeletePlaylist = async (playlistId) => {
     if (!window.confirm("Are you sure you want to delete this playlist?")) return;
     try {
-      await axios.delete(`http://localhost:4000/api/playlists/${playlistId}`, {
+      await axios.delete(`${baseURL}/api/playlists/${playlistId}`, {
         headers,
       });
       fetchPlaylists();

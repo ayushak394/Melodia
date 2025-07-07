@@ -22,9 +22,10 @@ function ExplorePage() {
   const dropdownRefs = useRef({});
 
   const { playSong, currentSong, isPlaying } = useMusic();
-
-  const SONGS_API = "http://localhost:4000/api/songs";
-  const PLAYLIST_API = "http://localhost:4000/api/playlists";
+  
+  const baseURL = process.env.REACT_APP_API_URL;
+  const SONGS_API = `${baseURL}/api/songs`;
+  const PLAYLIST_API = `${baseURL}/api/playlists`;
 
   useEffect(() => {
     const fetchSongs = async () => {

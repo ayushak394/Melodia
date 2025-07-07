@@ -7,7 +7,7 @@ function ForgotPassword() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const baseURL = "http://localhost:4000/";
+  const baseURL = process.env.REACT_APP_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

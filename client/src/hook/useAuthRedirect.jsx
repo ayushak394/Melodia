@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 const useAuthRedirect = () => {
   const navigate = useNavigate();
+    const baseURL = process.env.REACT_APP_API_URL;
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -13,7 +15,7 @@ const useAuthRedirect = () => {
 
     const validateToken = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/auth/validate", {
+        const response = await fetch(`${baseURL}/api/auth/validate`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

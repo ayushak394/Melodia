@@ -8,6 +8,7 @@ function SongPage() {
   const { id } = useParams();
   const [song, setSong] = useState(null);
   const [error, setError] = useState(null);
+  const baseURL = process.env.REACT_APP_API_URL;
 
   const isAuthenticated = !!localStorage.getItem("token");
 
@@ -19,7 +20,7 @@ function SongPage() {
   useEffect(() => {
     const fetchSong = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/songs/public/${id}`);
+        const res = await axios.get(`${baseURL}/api/songs/public/${id}`);
         setSong(res.data);
       } catch (err) {
         console.error("Error fetching song:", err);

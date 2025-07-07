@@ -6,22 +6,20 @@ import { useMusic } from "./MusicContext";
 import useAuthRedirect from "../hook/useAuthRedirect";
 
 function Library() {
-
   useAuthRedirect();
-  
+
   const [likedSongs, setLikedSongs] = useState([]);
   const [smartPlaylist, setSmartPlaylist] = useState([]);
   const token = localStorage.getItem("token");
   const { playSong, currentSong, isPlaying } = useMusic();
 
+  const baseURL = process.env.REACT_APP_API_URL;
+
   const fetchLikedSongs = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:4000/api/songs/liked",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axios.get(`${baseURL}}/api/songs/liked`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setLikedSongs(response.data.likedSongs || []);
     } catch (err) {
       console.error("Failed to load liked songs:", err);
@@ -34,7 +32,7 @@ function Library() {
 
   const handleSmartPlaylist = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/songs", {
+      const response = await axios.get(`${baseURL}/api/songs`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
