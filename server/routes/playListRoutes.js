@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Playlist = require("../models/playlist");
-const authenticateToken = require("../middleware/authMiddleware");
+const authenticateToken = require("../middleware/authMiddleWare");
 
 router.get("/", authenticateToken, async (req, res) => {
   try {

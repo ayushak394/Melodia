@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const authenticateToken = require("../middleware/authMiddleware");
+const authenticateToken = require("../middleware/authMiddleWare");
 const Like = require("../models/like");
 const Song = require("../models/song");
 

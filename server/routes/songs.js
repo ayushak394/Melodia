@@ -9,7 +9,7 @@ const {
   getPublicSongById,
 } = require('../controllers/songController');
 
-const authenticateUser = require('../middleware/authMiddleware');
+const authenticateUser = require('../middleware/authMiddleWare');
 
 router.get('/trending', getTrendingSongs); 
 
