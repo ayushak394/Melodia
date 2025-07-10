@@ -13,9 +13,6 @@ import {
   FaCheck,
 } from "react-icons/fa";
 
-const DEFAULT_IMAGE_URL =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVaeq7aGLY-6DrdI7rWqz02e1-AxernmMzC8TrCf3FFwnM2voSIoGxrTniNTTZJWIk2hM&usqp=CAU";
-
 const UserProfile = () => {
   const [username, setUsername] = useState("");
   const [newUsername, setNewUsername] = useState("");
@@ -189,9 +186,7 @@ const UserProfile = () => {
               src={
                 selectedImage
                   ? URL.createObjectURL(selectedImage)
-                  : profileImage?.trim()
-                  ? profileImage
-                  : DEFAULT_IMAGE_URL
+                  : profileImage
               }
               alt="User Avatar"
               className="w-40 h-40 md:w-52 md:h-52 rounded-full object-cover border-4 border-teal-400 shadow-lg transition duration-500"
