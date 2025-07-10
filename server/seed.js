@@ -475,8 +475,10 @@ const sampleSongs = [
   {
     title: "Sapphire",
     artist: "Ed Sheeran",
-    image: "https://res.cloudinary.com/dbgueh6q5/image/upload/v1751798032/download_b9ghe9.jpg",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798208/Ed_Sheeran_-_Sapphire_Official_Music_Video_JgDNFQ2RaLQ_wfpt1x.mp3",
+    image:
+      "https://res.cloudinary.com/dbgueh6q5/image/upload/v1751798032/download_b9ghe9.jpg",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798208/Ed_Sheeran_-_Sapphire_Official_Music_Video_JgDNFQ2RaLQ_wfpt1x.mp3",
     genre: "pop",
     mood: "romantic",
     duration: 210,
@@ -486,8 +488,10 @@ const sampleSongs = [
   {
     title: "Thinking Out Loud",
     artist: "Ed Sheeran",
-    image: "https://res.cloudinary.com/dbgueh6q5/image/upload/v1751798322/download_3_wja5jw.jpg",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798434/Ed_Sheeran_-_Thinking_Out_Loud_Official_Music_Video_lp-EO5I60KA_f7vbvj.mp3",
+    image:
+      "https://res.cloudinary.com/dbgueh6q5/image/upload/v1751798322/download_3_wja5jw.jpg",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798434/Ed_Sheeran_-_Thinking_Out_Loud_Official_Music_Video_lp-EO5I60KA_f7vbvj.mp3",
     genre: "pop",
     mood: "slow dance",
     duration: 240,
@@ -497,8 +501,10 @@ const sampleSongs = [
   {
     title: "Enchanted (Taylor’s Version)",
     artist: "Taylor Swift",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg5-NuV4El1uLU2dwhgwSpsfuDMdLx4Wf-zQ&s",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798586/Enchanted_Taylor_s_Version_7IID5YLPg7w_f5lfyj.mp3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg5-NuV4El1uLU2dwhgwSpsfuDMdLx4Wf-zQ&s",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798586/Enchanted_Taylor_s_Version_7IID5YLPg7w_f5lfyj.mp3",
     genre: "country-pop",
     mood: "magical",
     duration: 300,
@@ -508,8 +514,10 @@ const sampleSongs = [
   {
     title: "When We Were Young",
     artist: "Adele",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfAPJ9nu59P351wmUf9-jrsaMnl2y7slkGwg&s",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798735/When_We_Were_Young_a1IuJLebHgM_ssbuen.mp3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfAPJ9nu59P351wmUf9-jrsaMnl2y7slkGwg&s",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798735/When_We_Were_Young_a1IuJLebHgM_ssbuen.mp3",
     genre: "soul",
     mood: "nostalgic",
     duration: 290,
@@ -519,8 +527,10 @@ const sampleSongs = [
   {
     title: "Little Do You Know (Cover)",
     artist: "Sapphire & Alex Aiono",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfDsdtjTQGOTqQrMk6ihNm-UT1u54HCuK9OA&s",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798966/Alex_Sierra_-_Little_Do_You_Know_Annie_LeBlanc_Hayden_Summerall_Cover_Q7HgEjc_lXI_xtlh5l.mp3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfDsdtjTQGOTqQrMk6ihNm-UT1u54HCuK9OA&s",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751798966/Alex_Sierra_-_Little_Do_You_Know_Annie_LeBlanc_Hayden_Summerall_Cover_Q7HgEjc_lXI_xtlh5l.mp3",
     genre: "acoustic",
     mood: "sad",
     duration: 200,
@@ -530,8 +540,10 @@ const sampleSongs = [
   {
     title: "Sign of the Times",
     artist: "Harry Styles",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYBBol2Te-EDbYzlzldmHkqjdLP_LxGSvieg&s",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799226/Harry_Styles_-_Sign_of_the_Times_Lyrics_We4QQCMwyrg_qwezul.mp3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYBBol2Te-EDbYzlzldmHkqjdLP_LxGSvieg&s",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799226/Harry_Styles_-_Sign_of_the_Times_Lyrics_We4QQCMwyrg_qwezul.mp3",
     genre: "rock",
     mood: "melancholy",
     duration: 260,
@@ -541,8 +553,10 @@ const sampleSongs = [
   {
     title: "Ocean Eyes",
     artist: "Billie Eilish",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPwqlm-cbhuKisOGFEYBmrV6ZknjpTKDARxw&s",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799467/Billie_Eilish_-_Ocean_Eyes_Lyrics_HQitbbtPZz8_wmbrxn.mp3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPwqlm-cbhuKisOGFEYBmrV6ZknjpTKDARxw&s",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799467/Billie_Eilish_-_Ocean_Eyes_Lyrics_HQitbbtPZz8_wmbrxn.mp3",
     genre: "indie-pop",
     mood: "dreamy",
     duration: 195,
@@ -552,8 +566,10 @@ const sampleSongs = [
   {
     title: "Eyes Closed",
     artist: "Ed Sheeran",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv4Cb1dhmiMsQFhmrQ34V5d8IskP8Oi1LVmQ&s",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799653/Ed_Sheeran_-_Eyes_Closed_lzomiJ3mZXY_dx4u8k.mp3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv4Cb1dhmiMsQFhmrQ34V5d8IskP8Oi1LVmQ&s",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799653/Ed_Sheeran_-_Eyes_Closed_lzomiJ3mZXY_dx4u8k.mp3",
     genre: "pop",
     mood: "romantic",
     duration: 205,
@@ -563,8 +579,10 @@ const sampleSongs = [
   {
     title: "Love Story (Taylor’s Version)",
     artist: "Taylor Swift",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5id67RuMdU1ozFBPtTFIGqQOs1swpx_wgTQ&s",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799771/Taylor_Swift_-_Love_Story_Lyrics_KrsqPE9SMxo_itbrq8.mp3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5id67RuMdU1ozFBPtTFIGqQOs1swpx_wgTQ&s",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799771/Taylor_Swift_-_Love_Story_Lyrics_KrsqPE9SMxo_itbrq8.mp3",
     genre: "country",
     mood: "romantic",
     duration: 230,
@@ -574,8 +592,10 @@ const sampleSongs = [
   {
     title: "As it Was",
     artist: "Harry Styles",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0gev-rxJJxlWyVi5TXgQZR7JZCUYz5OVBQw&s",
-    audio: "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799972/As_It_Was_-_Harry_Styles_Lyrics_koN8PL5vTYg_ype8dq.mp3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0gev-rxJJxlWyVi5TXgQZR7JZCUYz5OVBQw&s",
+    audio:
+      "https://res.cloudinary.com/dbgueh6q5/video/upload/v1751799972/As_It_Was_-_Harry_Styles_Lyrics_koN8PL5vTYg_ype8dq.mp3",
     genre: "pop",
     mood: "relaxed",
     duration: 230,

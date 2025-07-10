@@ -1,25 +1,26 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import confetti from "canvas-confetti";
-import {
-  FaHeart
-} from "react-icons/fa";
+import { FaHeart, FaHome, FaUserCog } from "react-icons/fa";
 
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-      const baseURL = process.env.REACT_APP_API_URL;
+  const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      const response = await axios.post(`${baseURL}/api/auth/login`, formData);
+      const response = await axios.post(`${baseURL}/api/auth/login`, formData, {
+        headers: { "Content-Type": "application/json" },
+      });
+
       const { token } = response.data;
       localStorage.setItem("token", token);
 
@@ -31,100 +32,99 @@ function Login() {
 
       navigate("/home");
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed. Please try again.");
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Login failed. Please try again.";
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    const createMusicNote = () => {
-      const note = document.createElement("div");
-      note.innerText = "🎵";
-      note.className = "fixed animate-floatNote pointer-events-none z-30";
-      note.style.left = `${Math.random() * 100}vw`;
-      note.style.bottom = `0px`;
-      note.style.opacity = Math.random().toString();
-      note.style.fontSize = `${Math.random() * 20 + 16}px`;
-      note.style.color = "white";
-      document.body.appendChild(note);
-      setTimeout(() => note.remove(), 4000);
-    };
-
-    const interval = setInterval(() => createMusicNote(), 500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0d0d2b] via-[#1e1e4f] to-[#3a3a8a] text-white font-sans relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/noisy.png')] bg-repeat">
-      <header className="flex flex-col sm:flex-row justify-between items-center px-6 sm:px-8 py-4 bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 shadow-2xl border-b border-purple-800 sticky top-0 z-50">
-        <h1 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-4 sm:mb-0">
+
+      {/* Navbar */}
+      <header className="flex items-center justify-between px-6 sm:px-10 py-4 bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 shadow-xl border-b border-purple-800 sticky top-0 z-50">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3">
           <img
             src="/waveform.png"
             alt="Melodia Logo"
             className="w-10 h-10 lg:w-12 lg:h-12 rounded-full filter brightness-0 invert"
           />
-          <span className="bg-gradient-to-r from-teal-300 via-cyan-400 to-blue-500 text-transparent bg-clip-text drop-shadow-md">
+          <span className="text-3xl font-extrabold bg-gradient-to-r from-teal-300 via-cyan-400 to-blue-500 text-transparent bg-clip-text">
             Melodia
           </span>
-        </h1>
+        </Link>
 
-        <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-4">
+        {/* Action Buttons */}
+        <div className="flex items-center gap-4">
           <Link
             to="/"
-            className="bg-blue-700 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
+            className="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-transform transform hover:scale-105 text-sm sm:text-base flex items-center gap-2"
           >
-            <i className="fas fa-home mr-2 hidden sm:inline"></i>Home
+            <FaHome />
+            Home
+          </Link>
+          <Link
+            to="/devpanel"
+            className="bg-purple-700 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-transform transform hover:scale-105 text-sm sm:text-base flex items-center gap-2"
+          >
+            <FaUserCog />
+            Login as Developer
           </Link>
         </div>
       </header>
 
-      <div className="flex-grow flex items-center justify-center">
-        <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between bg-[#1f1f3a]/90 p-8 rounded-2xl shadow-2xl border-[3px] border-purple-400 backdrop-blur-md z-10 animate-fade-in shadow-purple-500/40 transition-all duration-500 ease-in-out group">
+      {/* Main Section */}
+      <div className="flex-grow flex items-center justify-center px-4">
+        <div className="w-full max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between bg-[#191932] p-8 rounded-2xl shadow-2xl border border-[#3a3a8a] backdrop-blur-md z-10 animate-fade-in border-4 border-teal-400/50">
+          {/* Image */}
           <div className="hidden md:flex w-1/2 justify-center">
             <img
-              src="https://cdn-icons-png.flaticon.com/512/727/727218.png"
-              alt="Login Music Icon"
-              className="w-72 h-auto animate-pulse-slow"
+              src="/waveform.png"
+              alt="Music Icon"
+              className="w-80 h-auto rounded-full filter brightness-0 invert"
             />
           </div>
 
+          {/* Form */}
           <div className="w-full md:w-1/2">
-            <h1 className="text-4xl font-extrabold mb-6 text-teal-300 text-center">
-              Login 🎶
-            </h1>
-            {error && (
-              <p className="text-red-400 mb-4 text-center animate-shake">{error}</p>
-            )}
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <h1 className="text-4xl font-extrabold mb-6 text-teal-300 text-center">Login</h1>
+            {error && <p className="text-red-400 mb-4 text-center animate-shake">{error}</p>}
+
+            <form onSubmit={handleSubmit} className="space-y-5">
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full p-3 rounded-lg bg-[#26264a] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
                 required
               />
               <input
                 type="password"
                 placeholder="Enter your password"
                 value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                className="w-full p-3 rounded-lg bg-[#26264a] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
                 required
               />
-              <div className="flex justify-between text-sm text-white">
+              <div className="flex justify-end text-sm text-white">
                 <Link to="/forgotpassword" className="text-blue-400 hover:underline">
                   Forgot password?
                 </Link>
               </div>
               <button
                 type="submit"
-                className="w-full bg-purple-700 hover:bg-purple-600 py-3 rounded-xl text-white font-semibold transition duration-200 shadow-md hover:shadow-purple-400/40"
+                disabled={loading}
+                className={`w-full bg-green-600 hover:bg-green-700 py-3 rounded-xl text-white font-semibold transition duration-200 shadow-md hover:shadow-green-400/40 ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Login Now
+                {loading ? "Logging in..." : "Login Now"}
               </button>
               <p className="text-center text-sm text-gray-300 mt-4">
                 Not a member?{" "}
@@ -137,6 +137,7 @@ function Login() {
         </div>
       </div>
 
+      {/* Footer */}
       <footer className="py-8 text-center z-10 relative animate-fade-in border-t border-purple-800 mt-auto">
         <p className="text-gray-400 text-lg">© 2025 Melodia. All rights reserved.</p>
         <p className="mt-4 text-gray-500 text-sm">

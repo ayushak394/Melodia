@@ -10,7 +10,7 @@ function SongPage() {
   const [error, setError] = useState(null);
 
   const isAuthenticated = !!localStorage.getItem("token");
-          const baseURL = process.env.REACT_APP_API_URL;
+  const baseURL = "http://localhost:4000";
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -52,7 +52,8 @@ function SongPage() {
             to="/explore"
             className="bg-purple-700 hover:bg-purple-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
           >
-            <i className="fas fa-compass mr-2 hidden sm:inline"></i>Explore More with Melodia
+            <i className="fas fa-compass mr-2 hidden sm:inline"></i>Explore More
+            with Melodia
           </Link>
 
           {isAuthenticated && (
@@ -68,14 +69,16 @@ function SongPage() {
                 to="/playlist"
                 className="bg-emerald-700 hover:bg-emerald-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
               >
-                <i className="fas fa-headphones mr-2 hidden sm:inline"></i>My Playlists
+                <i className="fas fa-headphones mr-2 hidden sm:inline"></i>My
+                Playlists
               </Link>
 
               <button
                 onClick={handleLogout}
                 className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
               >
-                <i className="fas fa-sign-out-alt mr-2 hidden sm:inline"></i>Logout
+                <i className="fas fa-sign-out-alt mr-2 hidden sm:inline"></i>
+                Logout
               </button>
             </>
           )}
@@ -127,7 +130,8 @@ function SongPage() {
           to="/explore"
           className="bg-purple-700 hover:bg-purple-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
         >
-          <i className="fas fa-compass mr-2 hidden sm:inline"></i>Explore More with Melodia
+          <i className="fas fa-compass mr-2 hidden sm:inline"></i>Explore More
+          with Melodia
         </Link>
 
         {isAuthenticated && (
@@ -143,14 +147,16 @@ function SongPage() {
               to="/playlist"
               className="bg-emerald-700 hover:bg-emerald-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
             >
-              <i className="fas fa-headphones mr-2 hidden sm:inline"></i>My Playlists
+              <i className="fas fa-headphones mr-2 hidden sm:inline"></i>My
+              Playlists
             </Link>
 
             <button
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
             >
-              <i className="fas fa-sign-out-alt mr-2 hidden sm:inline"></i>Logout
+              <i className="fas fa-sign-out-alt mr-2 hidden sm:inline"></i>
+              Logout
             </button>
           </>
         )}
@@ -183,7 +189,8 @@ function SongPage() {
           </div>
         </div>
         <p className="mt-10 text-gray-400 text-sm md:text-base text-center max-w-lg">
-          Get ready to groove with "{song.title}" by {song.artist}! Share this page with friends.
+          Get ready to groove with "{song.title}" by {song.artist}! Share this
+          page with friends.
         </p>
       </div>
     </div>

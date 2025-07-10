@@ -1,20 +1,34 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import {
-  FaHeart
-} from "react-icons/fa";
+import { FaHeart, FaArrowLeft, FaHome } from "react-icons/fa";
 
 function ForgotPassword() {
   const [formData, setFormData] = useState({ email: "", newPassword: "" });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const baseURL = process.env.REACT_APP_API_URL;
+  const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+
+  // Password regex validation
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setMessage("");
+    setLoading(true);
+
+    if (!passwordRegex.test(formData.newPassword)) {
+      setError(
+        "Password must be at least 8 characters, include uppercase, lowercase, number, and special character."
+      );
+      setLoading(false);
+      return;
+    }
+
     try {
       await axios.post(`${baseURL}/api/auth/forgotpassword`, formData);
       setMessage(
@@ -25,26 +39,10 @@ function ForgotPassword() {
       setError(
         error.response?.data?.message || "Reset failed. Please try again."
       );
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const createMusicNote = () => {
-      const note = document.createElement("div");
-      note.innerText = "🎶";
-      note.className = "fixed animate-floatNote pointer-events-none z-30";
-      note.style.left = `${Math.random() * 100}vw`;
-      note.style.bottom = `0px`;
-      note.style.opacity = Math.random().toString();
-      note.style.fontSize = `${Math.random() * 20 + 16}px`;
-      note.style.color = "white";
-      document.body.appendChild(note);
-      setTimeout(() => note.remove(), 4000);
-    };
-
-    const interval = setInterval(() => createMusicNote(), 500);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0d0d2b] via-[#1e1e4f] to-[#3a3a8a] text-white font-sans relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/noisy.png')] bg-repeat">
@@ -63,56 +61,80 @@ function ForgotPassword() {
         <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-4">
           <Link
             to="/"
-            className="bg-blue-700 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
+            className="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-transform transform hover:scale-105 text-sm sm:text-base flex items-center gap-2"
           >
-            <i className="fas fa-home mr-2 hidden sm:inline"></i>Home
+            <FaHome />Home
           </Link>
         </div>
       </header>
 
       <div className="flex-grow flex items-center justify-center">
-        <div className="w-full max-w-3xl mx-auto bg-[#1f1f3a]/90 p-10 rounded-2xl shadow-2xl border-[3px] border-teal-400 backdrop-blur-md z-10 animate-fade-in shadow-teal-500/40 transition-all duration-500 ease-in-out group">
-          <h1 className="text-4xl font-extrabold mb-6 text-teal-300 text-center">
-            Forgot Password 🔐
-          </h1>
-
-          {error && (
-            <p className="text-red-400 mb-4 text-center animate-shake">{error}</p>
-          )}
-          {message && (
-            <p className="text-green-400 mb-4 text-center animate-fade-in">
-              {message}
-            </p>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
-              required
+        <div className="w-full max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between bg-[#1f1f3a]/90 p-8 rounded-2xl shadow-2xl border border-[#3a3a8a] backdrop-blur-md z-10 animate-fade-in border-4 border-teal-400/50">
+          <div className="hidden md:flex w-1/2 justify-center">
+            <img
+              src="/waveform.png"
+              alt="Music Icon"
+              className="w-80 h-auto rounded-full filter brightness-0 invert"
             />
-            <input
-              type="password"
-              placeholder="Enter your new password"
-              value={formData.newPassword}
-              onChange={(e) =>
-                setFormData({ ...formData, newPassword: e.target.value })
-              }
-              className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full bg-purple-700 hover:bg-purple-600 py-3 rounded-xl text-white font-semibold transition duration-200 shadow-md hover:shadow-purple-400/40"
-            >
-              Reset Password
-            </button>
-          </form>
+          </div>
+
+          <div className="w-full md:w-1/2">
+            <h1 className="text-4xl font-extrabold mb-6 text-teal-300 text-center">
+              Forgot Password
+            </h1>
+
+            {error && (
+              <p className="text-red-400 mb-4 text-center animate-shake">
+                {error}
+              </p>
+            )}
+            {message && (
+              <p className="text-green-400 mb-4 text-center animate-fade-in">
+                {message}
+              </p>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
+                required
+              />
+              <input
+                type="password"
+                placeholder="Enter your new password"
+                value={formData.newPassword}
+                onChange={(e) =>
+                  setFormData({ ...formData, newPassword: e.target.value })
+                }
+                className="w-full p-3 rounded-lg bg-[#2a2a4f] text-white border border-gray-600 focus:outline-none focus:border-teal-400"
+                required
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full bg-green-600 hover:bg-green-700 py-3 rounded-xl text-white font-semibold transition duration-200 shadow-md hover:shadow-green-400/40 ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                {loading ? "Resetting..." : "Reset Password"}
+              </button>
+
+              <p className="text-center text-sm text-gray-300 mt-4">
+                <Link
+                  to="/login"
+                  className="text-blue-400 hover:underline flex items-center justify-center"
+                >
+                  <FaArrowLeft className="mr-2" /> Back to Login
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
       </div>
 

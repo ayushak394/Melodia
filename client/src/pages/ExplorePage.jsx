@@ -3,9 +3,9 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "./Header";
 import { useMusic } from "./MusicContext";
-import useAuthRedirect from "../hook/useAuthRedirect";
-import { FaPlay, FaPause,FaPlus,FaMusic, FaSave, FaTimes } from "react-icons/fa";
 
+import { FaPlay, FaPause,FaPlus,FaMusic, FaSave, FaTimes } from "react-icons/fa";
+import useRoleRedirect from "../hook/useRoleRedirect";
 const Notification = ({ message, type, onClose }) => {
   const bgColor = type === "success" ? "bg-green-600" : "bg-red-600";
   const textColor = "text-white";
@@ -28,7 +28,8 @@ const Notification = ({ message, type, onClose }) => {
 
 
 function ExplorePage() {
-  useAuthRedirect();
+
+  useRoleRedirect({ allowedRoles: ["user", "admin"] }); 
 
   const [searchQuery, setSearchQuery] = useState("");
   const [genreFilter, setGenreFilter] = useState("");
@@ -50,7 +51,7 @@ function ExplorePage() {
 
   const { playSong, currentSong, isPlaying } = useMusic();
 
-  const baseURL = process.env.REACT_APP_API_URL;
+  const baseURL = "http://localhost:4000";
 
   const SONGS_API = `${baseURL}/api/songs`;
   const PLAYLIST_API = `${baseURL}/api/playlists`;
@@ -367,13 +368,14 @@ function ExplorePage() {
               const isCurrent = currentSong && currentSong._id === song._id; 
               return (
               <motion.div
-                key={song._id}
-                className={`bg-gray-800 rounded-xl shadow-xl p-4 relative group cursor-pointer ${
-                  isCurrent
-                    ? "border border-pink-500 shadow-pink-500"
-                    : "border border-transparent" 
-                } shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300`}
-              >
+  key={song._id}
+  className={`bg-gray-800 rounded-xl p-4 relative group cursor-pointer 
+    ${isCurrent 
+      ? "border border-pink-500 shadow-pink-500 animate-pulse" 
+      : "border border-purple-800 shadow-[0_0_20px_rgba(128,0,128,0.6)]"} 
+    hover:scale-[1.05] transition-transform duration-300`}
+>
+
                 <div className="relative w-full h-48 rounded-lg overflow-hidden">
                   <img
                     src={song.image}

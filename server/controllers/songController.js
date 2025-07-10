@@ -52,7 +52,9 @@ const getSongs = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching songs", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching songs", error: error.message });
   }
 };
 
@@ -68,9 +70,9 @@ const toggleLikeSong = async (req, res) => {
     const index = user.likedSongs.indexOf(songId);
 
     if (index === -1) {
-      user.likedSongs.push(songId); 
+      user.likedSongs.push(songId);
     } else {
-      user.likedSongs.splice(index, 1); 
+      user.likedSongs.splice(index, 1);
     }
 
     await user.save();
@@ -96,9 +98,7 @@ const getLikedSongs = async (req, res) => {
 
 const getTrendingSongs = async (req, res) => {
   try {
-    const songs = await Song.find({})
-      .sort({ trendingScore: -1 })
-      .limit(5);
+    const songs = await Song.find({}).sort({ trendingScore: -1 }).limit(5);
 
     res.status(200).json(songs);
   } catch (error) {
@@ -123,5 +123,5 @@ module.exports = {
   toggleLikeSong,
   getLikedSongs,
   getTrendingSongs,
-  getPublicSongById, 
+  getPublicSongById,
 };
