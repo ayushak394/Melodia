@@ -34,7 +34,7 @@ function Library() {
   const [smartPlaylist, setSmartPlaylist] = useState([]);
   const token = localStorage.getItem("token");
   const { playSong, currentSong, isPlaying } = useMusic();
-const baseURL = process.env.REACT_APP_API_URI;
+  const baseURL = process.env.REACT_APP_API_URL;
 
 
   const [notification, setNotification] = useState({

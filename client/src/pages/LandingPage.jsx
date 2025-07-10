@@ -13,7 +13,7 @@ import {
 
 function LandingPage() {
   const startBtnRef = useRef(null);
-const baseURL = process.env.REACT_APP_API_URI;
+  const baseURL = process.env.REACT_APP_API_URL;
 
   // useEffect(() => {
   //   const createNote = () => {

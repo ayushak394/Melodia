@@ -9,7 +9,7 @@ function ForgotPassword() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-const baseURL = process.env.REACT_APP_API_URI;
+  const baseURL = process.env.REACT_APP_API_URL;
 
   // Password regex validation
   const passwordRegex =

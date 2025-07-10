@@ -7,7 +7,7 @@ import useRoleRedirect from "../hook/useRoleRedirect";
 export default function AdminPage() {
   const [showModal, setShowModal] = useState(false);
   useRoleRedirect({ allowedRoles: ["admin"] });
-  const baseURL = process.env.REACT_APP_API_URI;
+  const baseURL = process.env.REACT_APP_API_URL;
 
 
   // 🎵 Floating Music Emojis

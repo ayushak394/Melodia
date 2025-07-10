@@ -9,7 +9,7 @@ function Header() {
   const [userRole, setUserRole] = useState(null);
   const isAuthenticated = localStorage.getItem("token");
 
-  const baseURL = process.env.REACT_APP_API_URI;
+  const baseURL = process.env.REACT_APP_API_URL;
 
 
   const handleLogout = () => {
