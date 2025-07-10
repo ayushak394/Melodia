@@ -51,7 +51,7 @@ function ExplorePage() {
 
   const { playSong, currentSong, isPlaying } = useMusic();
 
-  const baseURL = "http://localhost:4000";
+const baseURL = process.env.REACT_APP_API_URI;
 
   const SONGS_API = `${baseURL}/api/songs`;
   const PLAYLIST_API = `${baseURL}/api/playlists`;

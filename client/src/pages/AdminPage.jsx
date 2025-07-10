@@ -7,6 +7,8 @@ import useRoleRedirect from "../hook/useRoleRedirect";
 export default function AdminPage() {
   const [showModal, setShowModal] = useState(false);
   useRoleRedirect({ allowedRoles: ["admin"] });
+  const baseURL = process.env.REACT_APP_API_URI;
+
 
   // 🎵 Floating Music Emojis
   useEffect(() => {
@@ -77,7 +79,7 @@ export default function AdminPage() {
 
       {showModal && (
         <AdminUploadModal
-          baseURL="http://localhost:4000"
+          baseURL={baseURL}
           onClose={() => setShowModal(false)}
           onSuccess={() => {
             setShowModal(false);

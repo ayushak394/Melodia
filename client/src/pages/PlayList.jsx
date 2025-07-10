@@ -35,7 +35,7 @@ useRoleRedirect({ allowedRoles: ["user", "admin"] });
   const [newPlaylistName, setNewPlaylistName] = useState("");
   const [showCreatePlaylistModal, setShowCreatePlaylistModal] = useState(false);
   const [createPlaylistName, setCreatePlaylistName] = useState("");
-  const baseURL = "http://localhost:4000";
+const baseURL = process.env.REACT_APP_API_URI;
 
 
   const { playSong, currentSong, isPlaying } = useMusic(); 

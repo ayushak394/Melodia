@@ -18,7 +18,7 @@ function DeveloperPanel() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+  const baseURL = process.env.REACT_APP_API_URL;
 
   const verifySecret = async () => {
     setLoading(true);

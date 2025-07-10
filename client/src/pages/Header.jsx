@@ -9,6 +9,9 @@ function Header() {
   const [userRole, setUserRole] = useState(null);
   const isAuthenticated = localStorage.getItem("token");
 
+  const baseURL = process.env.REACT_APP_API_URI;
+
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -27,7 +30,7 @@ function Header() {
 
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/user/profile", {
+        const res = await axios.get(`${baseURL}/api/user/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

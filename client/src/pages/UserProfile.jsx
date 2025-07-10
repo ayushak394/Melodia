@@ -38,7 +38,7 @@ const UserProfile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadSuccess, setUploadSuccess] = useState(false);
 
-  const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+const baseURL = process.env.REACT_APP_API_URI;
 
   const capitalizeFirstLetter = (string) => {
     if (!string) return "";
