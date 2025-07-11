@@ -72,88 +72,89 @@ function MusicPlayer() {
       <audio ref={audioRef} src={currentSong?.audio || ""} />
 
       {currentSong && (
-        <footer className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-purple-800 shadow-2xl z-50">
-          <div className="flex items-center justify-between px-8 py-4 text-white">
-            <div className="w-1/4 flex items-center space-x-5">
-              <img
-                src={currentSong.image || "/fallback.jpg"}
-                alt={currentSong.title}
-                className="w-16 h-16 rounded-lg object-cover shadow-md"
-              />
-              <div>
-                <h4 className="text-xl font-bold text-purple-200 truncate w-48">
-                  {currentSong.title}
-                </h4>
-                <p className="text-sm text-gray-400 truncate w-48">
-                  {currentSong.artist}
-                </p>
-              </div>
-            </div>
+        <footer className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-purple-800 shadow-2xl z-50 text-white">
+  <div className="flex flex-col md:flex-row items-center justify-between gap-y-4 md:gap-y-0 md:gap-x-6 px-4 sm:px-6 md:px-8 py-4 w-full">
 
-            <div className="flex flex-col items-center flex-grow mx-8">
-              <div className="flex items-center space-x-8 text-3xl mb-3">
-                <button
-                  onClick={playPrevious}
-                  className="text-gray-400 hover:text-blue-400 transform hover:scale-110 transition duration-200"
-                  aria-label="Previous"
-                >
-                  <i className="fas fa-backward"></i>
-                </button>
-                <button
-                  onClick={() => setIsPlaying((prev) => !prev)}
-                  className="text-purple-400 hover:text-purple-300 transform hover:scale-105 transition duration-200 text-5xl"
-                  aria-label={isPlaying ? "Pause" : "Play"}
-                >
-                  <i className={`fas ${isPlaying ? "fa-pause-circle" : "fa-play-circle"}`} />
-                </button>
-                <button
-                  onClick={playNext}
-                  className="text-gray-400 hover:text-blue-400 transform hover:scale-110 transition duration-200"
-                  aria-label="Next"
-                >
-                  <i className="fas fa-forward"></i>
-                </button>
-              </div>
+    {/* Song Info */}
+    <div className="flex items-center space-x-4 w-full md:w-1/3 min-w-0">
+      <img
+        src={currentSong.image || "/fallback.jpg"}
+        alt={currentSong.title}
+        className="w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover shadow-md"
+      />
+      <div className="overflow-hidden w-full">
+        <h4 className="text-base md:text-lg font-semibold text-purple-200 truncate">
+          {currentSong.title}
+        </h4>
+        <p className="text-sm text-gray-400 truncate">{currentSong.artist}</p>
+      </div>
+    </div>
 
-              <div className="flex items-center w-full space-x-3 text-sm text-gray-400">
-                <span className="w-10 text-right">{formatTime(currentTime)}</span>
-                <input
-                  type="range"
-                  min="0"
-                  max={duration || 0}
-                  step="0.1"
-                  value={currentTime}
-                  onChange={handleSeek}
-                  className="flex-1 h-2 rounded-full bg-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  style={{
-                    background: `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${
-                      (currentTime / duration) * 100
-                    }%, #4b5563 ${(currentTime / duration) * 100}%, #4b5563 100%)`,
-                  }}
-                />
-                <span className="w-10 text-left">{formatTime(duration)}</span>
-              </div>
-            </div>
+    {/* Controls */}
+    <div className="flex flex-col items-center w-full md:w-1/3 max-w-full">
+      <div className="flex items-center justify-center space-x-6 text-2xl md:text-3xl mb-2">
+        <button
+          onClick={playPrevious}
+          className="text-gray-400 hover:text-blue-400 transition-transform transform hover:scale-110"
+        >
+          <i className="fas fa-backward" />
+        </button>
+        <button
+          onClick={() => setIsPlaying((prev) => !prev)}
+          className="text-purple-400 hover:text-purple-300 transition-transform transform hover:scale-110 text-4xl md:text-5xl"
+        >
+          <i className={`fas ${isPlaying ? "fa-pause-circle" : "fa-play-circle"}`} />
+        </button>
+        <button
+          onClick={playNext}
+          className="text-gray-400 hover:text-blue-400 transition-transform transform hover:scale-110"
+        >
+          <i className="fas fa-forward" />
+        </button>
+      </div>
 
-            <div className="w-1/4 flex items-center justify-end space-x-4">
-              <i className={`fas ${getVolumeIcon()} text-xl text-gray-400`}></i>
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value={volume}
-                onChange={(e) => setVolume(parseFloat(e.target.value))}
-                className="w-28 h-2 rounded-full bg-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
-                style={{
-                  background: `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${
-                    volume * 100
-                  }%, #4b5563 ${volume * 100}%, #4b5563 100%)`,
-                }}
-              />
-            </div>
-          </div>
-        </footer>
+      {/* Seek Bar */}
+      <div className="flex items-center w-full space-x-2 text-xs md:text-sm text-gray-400">
+        <span className="w-10 text-right">{formatTime(currentTime)}</span>
+        <input
+          type="range"
+          min="0"
+          max={duration || 0}
+          step="0.1"
+          value={currentTime}
+          onChange={handleSeek}
+          className="flex-1 h-2 rounded-full bg-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
+          style={{
+            background: `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${
+              (currentTime / duration) * 100
+            }%, #4b5563 ${(currentTime / duration) * 100}%, #4b5563 100%)`,
+          }}
+        />
+        <span className="w-10 text-left">{formatTime(duration)}</span>
+      </div>
+    </div>
+
+    {/* Volume Control */}
+    <div className="flex items-center justify-end space-x-3 w-full md:w-1/3 px-2 md:px-0">
+      <i className={`fas ${getVolumeIcon()} text-lg md:text-xl text-gray-400`} />
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={volume}
+        onChange={(e) => setVolume(parseFloat(e.target.value))}
+        className="w-full max-w-[120px] h-2 rounded-full bg-gray-700 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
+        style={{
+          background: `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${
+            volume * 100
+          }%, #4b5563 ${volume * 100}%, #4b5563 100%)`,
+        }}
+      />
+    </div>
+  </div>
+</footer>
+
       )}
     </>
   );
